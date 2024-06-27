@@ -13,7 +13,7 @@ def validar_marca_modelo(nombre):
     return len(nombre) >= 3
 
 def validar_año(año):
-    return año > 1980
+    return año > 1980 and año < 2024
 
 def validar_valor(valor):
     return valor >= 500000
@@ -38,7 +38,7 @@ def guardar_vehiculo(vehiculos):
     try:
         año = int(input("Ingrese el año del vehículo (debe ser mayor a 1980): "))
         if not validar_año(año):
-            print("Año inválido. Debe ser mayor a 1980.")
+            print("Año inválido, debe ser mayor de 1980 y hasta el año actual.")
             return
     except ValueError:
         print("Año inválido. Debe ser un número entero.")
