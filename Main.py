@@ -65,7 +65,19 @@ def guardar_vehiculo(vehiculos):
 
 # buscar un vehículo por su patente
 def buscar_vehiculo(vehiculos):
-    pass
+    patente = input("Ingrese la patente del vehículo que desea buscar: ")
+    if patente in vehiculos:
+        vehiculo = vehiculos[patente]
+        print(f"Patente: {patente}")
+        print(f"Marca: {vehiculo['marca']}")
+        print(f"Modelo: {vehiculo['modelo']}")
+        print(f"Año: {vehiculo['año']}")
+        print(f"Valor: {vehiculo['valor']}")
+        print(f"Estado: {'Vendido' if vehiculo['vendido'] else 'Disponible'}")
+        años_desde_fabricacion = datetime.now().year - vehiculo['año']
+        print(f"Años desde fabricación: {años_desde_fabricacion}")
+    else:
+        print("Vehículo no encontrado.")
 
 # listar todos los vehículos
 def listar_vehiculos(vehiculos):
