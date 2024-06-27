@@ -20,7 +20,48 @@ def validar_valor(valor):
 
 # guardar los datos del vehículo
 def guardar_vehiculo(vehiculos):
-    pass
+    patente = input("Ingrese la patente (6 caracteres): ")
+    if not validar_patente(patente):
+        print("Patente inválida. Debe tener 6 caracteres.")
+        return
+
+    marca = input("Ingrese la marca (mínimo 3 caracteres): ")
+    if not validar_marca_modelo(marca):
+        print("Marca inválida. Debe tener al menos 3 caracteres.")
+        return
+
+    modelo = input("Ingrese el modelo (mínimo 3 caracteres): ")
+    if not validar_marca_modelo(modelo):
+        print("Modelo inválido. Debe tener al menos 3 caracteres.")
+        return
+
+    try:
+        año = int(input("Ingrese el año del vehículo (debe ser mayor a 1980): "))
+        if not validar_año(año):
+            print("Año inválido. Debe ser mayor a 1980.")
+            return
+    except ValueError:
+        print("Año inválido. Debe ser un número entero.")
+        return
+
+    try:
+        valor = int(input("Ingrese el valor del vehículo (mínimo 500.000): "))
+        if not validar_valor(valor):
+            print("Valor inválido. Debe ser mayor o igual a 500.000.")
+            return
+    except ValueError:
+        print("Valor inválido. Debe ser un número entero.")
+        return
+
+    vehiculos[patente] = {
+        "marca": marca,
+        "modelo": modelo,
+        "año": año,
+        "valor": valor,
+        "vendido": False
+    }
+    print("Vehículo guardado exitosamente.")
+    guardar_datos_csv(vehiculos)
 
 # buscar un vehículo por su patente
 def buscar_vehiculo(vehiculos):
