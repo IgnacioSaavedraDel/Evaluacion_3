@@ -81,11 +81,35 @@ def buscar_vehiculo(vehiculos):
 
 # listar todos los vehículos
 def listar_vehiculos(vehiculos):
-    pass
+    if vehiculos:
+        for patente, vehiculo in vehiculos.items():
+            print(f"Patente: {patente} - Marca: {vehiculo['marca']} - Modelo: {vehiculo['modelo']} - Año: {vehiculo['año']} - Valor: {vehiculo['valor']} - Estado: {'Vendido' if vehiculo['vendido'] else 'Disponible'}")
+    else:
+        print("No hay vehículos registrados.")
 
 # imprimir contrato de compraventa
 def imprimir_contrato(vehiculos):
-    pass
+    patente = input("Ingrese la patente del vehículo que desea vender: ")
+    if patente in vehiculos and not vehiculos[patente]['vendido']:
+        vehiculo = vehiculos[patente]
+        numero_contrato = datetime.now().strftime("%Y%m%d%H%M%S")
+        print(f"Número de contrato: {numero_contrato}")
+        print(f"Patente: {patente}")
+        print(f"Marca: {vehiculo['marca']}")
+        print(f"Modelo: {vehiculo['modelo']}")
+        print(f"Año: {vehiculo['año']}")
+        print(f"Valor: {vehiculo['valor']}")
+        confirmar = input("¿Desea confirmar la venta del vehículo? (si/no): ")
+        if confirmar.lower() == "si":
+            vehiculo['vendido'] = True
+            print("El vehículo ha sido vendido.")
+            guardar_datos_csv(vehiculos)
+        else:
+            print("Venta cancelada.")
+    elif patente not in vehiculos:
+        print("Vehículo no encontrado.")
+    else:
+        print("El vehículo ya ha sido vendido.")
 
 # guardar los datos en un archivo CSV
 def guardar_datos_csv(vehiculos):
