@@ -113,11 +113,33 @@ def imprimir_contrato(vehiculos):
 
 # guardar los datos en un archivo CSV
 def guardar_datos_csv(vehiculos):
-    pass
+    try:
+        with open('vehiculos.csv', mode='w', newline='') as file:
+            writer = csv.writer(file)
+            writer.writerow(["Patente", "Marca", "Modelo", "Año", "Valor", "Vendido"])
+            for patente, vehiculo in vehiculos.items():
+                writer.writerow([patente, vehiculo["marca"], vehiculo["modelo"], vehiculo["año"], vehiculo["valor"], vehiculo["vendido"]])
+        print("Datos guardados en 'vehiculos.csv' con éxito.")
+    except Exception as e:
+        print(f"Error al guardar los datos: {e}")
 
 # Cargar datos desde el archivo CSV
 def cargar_datos_csv():
-    pass
+    vehiculos = {}
+    try:
+        with open('vehiculos.csv', mode='r') as file:
+            reader = csv.DictReader(file)
+            for row in reader:
+                vehiculos[row["Patente"]] = {
+                    "marca": row["Marca"],
+                    "modelo": row["Modelo"],
+                    "año": int(row["Año"]),
+                    "valor": int(row["Valor"]),
+                    "vendido": row["Vendido"] == "True"
+                }
+    except FileNotFoundError:
+        pass
+    return vehiculos
 
 # menú
 def menu():
